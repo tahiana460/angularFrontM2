@@ -8,5 +8,5 @@ import { Component } from '@angular/core';
   styleUrl: './assignments.component.css'
 })
 export class AssignmentsComponent {
-
+  titre = "Ceci est un titre xD"
 }
