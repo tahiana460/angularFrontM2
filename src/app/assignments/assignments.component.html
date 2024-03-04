@@ -1,1 +1,19 @@
-<p>{{titre}}</p>
+<h2>Titre du composant: {{ titre }}</h2>
+
+@for (assignment of assignments; track assignment.nom) {
+    <!-- <div [ngClass]="{'rendu': assignment.rendu, 'nonRendu': !assignment.rendu}"> -->
+    <div>
+        @if (assignment.rendu) {
+            <p appRendu>
+                Le devoir {{assignment.nom}} a été rendu le {{assignment.dateDeRendu | date: 'dd/MM/yyyy'}}
+            </p> 
+            <!-- <ng-template #nonsoumis>
+                Le devoir {{assignment.nom}} doit être rendu le {{assignment.dateDeRendu | date: 'dd/MM/yyyy'}}.
+            </ng-template> -->
+        } @else {
+            <p>
+                Le devoir {{assignment.nom}} doit être rendu le {{assignment.dateDeRendu | date: 'dd/MM/yyyy'}}.
+            </p>
+        }
+    </div>
+}
