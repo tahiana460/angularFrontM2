@@ -1,19 +1,42 @@
-<h2>Titre du composant: {{ titre }}</h2>
+@if(formVisible) {
+    <app-add-assignment (nouvelAssignment)="ajouteAssignment($event)"></app-add-assignment>
+} @else {
+    <div class="container">
+        <button mat-flat-button color="accent" class="btnAjout" (click)="onAddAssignmentBtnClick()">
+            Ajouter assignment
+        </button>
+        <h2>{{ titre }}</h2>
 
-@for (assignment of assignments; track assignment.nom) {
-    <!-- <div [ngClass]="{'rendu': assignment.rendu, 'nonRendu': !assignment.rendu}"> -->
-    <div>
-        @if (assignment.rendu) {
-            <p appRendu>
-                Le devoir {{assignment.nom}} a été rendu le {{assignment.dateDeRendu | date: 'dd/MM/yyyy'}}
-            </p> 
-            <!-- <ng-template #nonsoumis>
-                Le devoir {{assignment.nom}} doit être rendu le {{assignment.dateDeRendu | date: 'dd/MM/yyyy'}}.
-            </ng-template> -->
-        } @else {
-            <p>
-                Le devoir {{assignment.nom}} doit être rendu le {{assignment.dateDeRendu | date: 'dd/MM/yyyy'}}.
-            </p>
-        }
+        <mat-divider></mat-divider>
+        <mat-list>
+            @for (a of assignments; track a.nom) {
+                <mat-list-item (click)="assignmentClicked(a)">
+                    <div [ngStyle] ="{'color': getColor(a)}">
+                        <h3 matLine>{{ a.nom }}</h3>
+                        <p matLine>rendu: {{a.rendu}}</p>
+                        <h3 matListItemTitle>{{ a.dateDeRendu | date }}</h3>
+                        <p matListItemLine>{{ a.nom }} rendu {{ a.rendu}}</p>
+                    </div>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+                <!-- <div [ngClass]="{'rendu': assignment.rendu, 'nonRendu': !assignment.rendu}"> -->
+                <!-- <div [ngStyle] ="{'color': getColor(assignment)}"> -->
+                    <!-- @if (assignment.rendu) {
+                        <li appRendu>
+                            Le devoir {{assignment.nom}} a été rendu le {{assignment.dateDeRendu | date: 'dd/MM/yyyy'}}
+                        </li> -->
+                        <!-- <ng-template #nonsoumis>
+                            Le devoir {{assignment.nom}} doit être rendu le {{assignment.dateDeRendu | date: 'dd/MM/yyyy'}}.
+                        </ng-template> -->
+                    <!-- } @else {
+                        <li>
+                            Le devoir {{assignment.nom}} doit être rendu le {{assignment.dateDeRendu | date: 'dd/MM/yyyy'}}.
+                        </li>
+                    } -->
+                <!-- </div> -->
+            }
+        </mat-list>
+
+        <app-assignment-detail [assignmentTransmis]="assignmentSelected"></app-assignment-detail>
     </div>
 }
